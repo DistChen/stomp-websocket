@@ -118,8 +118,12 @@
       ws = new Socket(url);
       ws.binaryType = "arraybuffer";
       ws.onmessage = onmessage;
-      ws.onclose   = function() {
+      ws.onclose   = function(evt) {
         var msg = "Whoops! Lost connection to " + url;
+        if(evt){
+          //evt is a object,it contains exception code and reason
+          msg=evt.reason;
+        }
         debug(msg);
           if (errorCallback) {
             errorCallback(msg);
